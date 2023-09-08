@@ -1,0 +1,7 @@
+---
+# setting up open on demand to run on a psuedo login node
+- hosts:
+  - localhost 
+  roles:
+  - { role: hotep_packs }
+
