@@ -4,6 +4,9 @@
 
 MAIN_INSTALL_DIR=/opt/slurm_current
 MAIN_INSTALL_TMP_DIR=/tmp/slurm_tmp
+MAIN_INSTALL_PREFIX=/opt
+
+
 
 #make the directories 
 mkdir -p ${MAIN_INSTALL_DIR}
@@ -19,51 +22,6 @@ dnf install -y ansible-core ansible ansible-collection-ansible-utils ansible-col
 #use this to install packages via ansible
 ansible-playbook --connection=local --inventory 127.0.0.1 ./site.yml
 
-#dnf install -y  gcc \
-#make \
-#cmake \
-#automake \
-#autoconf \
-#java-1.8.0-openjdk-devel \
-#java-1.8.0-openjdk \
-#pkgconf-pkg-config \
-#pkgconf \
-#rdma-core-devel \
-#libpkgconf \
-#zlib-devel \
-#bzip2-devel \
-#lbzip2 \
-#pbzip2 \
-#libgcrypt-devel \
-#openssl3-devel \
-#freeipmi-devel \
-#man2html \
-#man2html-core \
-#lua-devel \
-#gtk2-devel \
-#gtk3-devel \
-#rrdtool-devel \
-#http-parser-devel \
-#json-c-devel \
-#pmix-devel \
-#readline-devel \
-#libyaml-devel \
-#libjwt-devel \
-#pam-devel \
-#hdf5-devel \
-#hwloc-devel \
-#libbpf-devel \
-#dbus-devel \
-#hdf5-devel \
-#rocm-runtime-devel \
-#libibumad \
-#MariaDB-devel \
-#infiniband-diags-devel 
-##mariadb-devel
-#
-
-
-
 
 
 #change directory to tmp place 
@@ -78,17 +36,21 @@ wget -O munge-0.5.15.tar.gz https://github.com/dun/munge/tarball/master
 #grab apache directory studio
 wget -O apacheds-2.0.0.AM26.tar.gz https://dlcdn.apache.org//directory/apacheds/dist/2.0.0.AM26/apacheds-2.0.0.AM26.tar.gz
 
+#grab prometheus monitoring- version 2.47
+wget -O prometheus-2.47.0.linux-amd64.tar.gz https://github.com/prometheus/prometheus/releases/download/v2.47.0/prometheus-2.47.0.linux-amd64.tar.gz
 
 # untars the archives 
 tar -axvf munge-0.5.15.tar.gz
 tar -axvf slurm-23.02-latest.tar.bz2
 tar -axvf apacheds-2.0.0.AM26.tar.gz
+tar -axvf prometheus-2.47.0.linux-amd64.tar.gz
+
 
 #start the building munge 
 pushd dun-munge*
 bash ./bootstrap
 
-bash configure  --prefix=/usr --sysconfdir=/etc --localstatedir=/var --runstatedir=/run
+bash configure --prefix=${MAIN_INSTALL_PREFIX}/munge --sysconfdir=/etc --localstatedir=/var --runstatedir=/run
 
 popd 
 
@@ -96,17 +58,17 @@ popd
 #install slurm
 pushd slurm-23.02.5/
 
+bash configure --prefix=${MAIN_INSTALL_PREFIX}/slurm --sysconfdir=/etc --localstatedir=/var --runstatedir=/run
+
 popd 
 
 
 ## apacheds install 
 #note that this is a java thing so not a lot to do here 
-mv apacheds-2.0.0.AM26 /opt/apacheds
+mv apacheds-2.0.0.AM26 ${MAIN_INSTALL_PREFIX}/apacheds
 
 
 #setup the environment
-
-MAIN_INSTALL_DIR=${HOME}/spindle_build
 
 export PATH=${HOME}/spindle_build/bin:${PATH}
 export LD_LIBRARY_PATH=${HOME}/spindle_build/lib:${LD_LIBRARY_PATH}
