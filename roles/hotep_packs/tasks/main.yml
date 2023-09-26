@@ -42,4 +42,5 @@
       - libibumad
       - infiniband-diags-devel 
       - mariadb-devel
+      - chrony
     state: latest
