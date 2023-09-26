@@ -67,6 +67,9 @@ mv apacheds-2.0.0.AM26 ${MAIN_INSTALL_PREFIX}/apacheds
 ## prometheus install 
 mv prometheus-2.47.0.linux-amd64 ${MAIN_INSTALL_PREFIX}/prometheus
 
+## Make the munge key
+sudo -u munge ${MAIN_INSTALL_PREFIX}/munge/sbin/mungekey --verbose
+
 #Create the profile for the environment 
 cat << EOF > /etc/profile.d/z99_hotep.sh
 
@@ -81,3 +84,18 @@ export CPATH
 EOF
 #add manpath to profile
 #export MANPATH=${HOME}/spindle_build/share/man:${MANPATH}
+
+
+#Firewall services
+firewall-cmd --add-service=ntp 
+firewall-cmd --add-service=ssh
+
+## setup permanent
+firewall-cmd --runtime-to-permanent 
+
+#setup services
+## chronyd
+systemctl enable chronyd
+systemctl start chronyd
+
+
