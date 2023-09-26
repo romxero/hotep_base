@@ -85,6 +85,41 @@ EOF
 #add manpath to profile
 #export MANPATH=${HOME}/spindle_build/share/man:${MANPATH}
 
+#set up the ntp service with chrony configuration
+if ! [ -f /etc/chrony.conf_bak ]
+then 
+mv /etc/chrony.conf /etc/chrony.conf_bak
+cat << EOF > /etc/chrony.conf
+#hotep ntp settings
+server time.facebook.com iburst
+server time.windows.com iburst
+pool 2.fedora.pool.ntp.org iburst
+pool 0.us.pool.ntp.org iburst
+server time.apple.com iburst
+server ntp1.ona.org iburst
+server ntp1.net.berkeley.edu iburst
+pool 0.freebsd.pool.ntp.org iburst
+pool 1.openbsd.pool.ntp.org iburst
+pool time.nist.gov iburst
+server utcnist2.colorado.edu iburst
+
+driftfile /var/lib/chrony/drift
+
+makestep 1.0 3
+
+rtcsync
+
+keyfile /etc/chrony.keys
+
+leapsectz right/UTC
+
+logdir /var/log/chrony
+
+EOF
+
+fi 
+
+
 
 #Firewall services
 firewall-cmd --add-service=ntp 

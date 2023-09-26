@@ -44,4 +44,5 @@
       - mariadb-devel
       - chrony
       - firewalld
+      - openldap-clients
     state: latest
