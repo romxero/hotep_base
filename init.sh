@@ -31,16 +31,12 @@ wget -O slurm-23.02-latest.tar.bz2 https://download.schedmd.com/slurm/slurm-23.0
 #grab latest munge
 wget -O munge-0.5.15.tar.xz https://github.com/dun/munge/releases/download/munge-0.5.15/munge-0.5.15.tar.xz
 
-#grab apache directory studio
-wget -O apacheds-2.0.0.AM26.tar.gz https://dlcdn.apache.org//directory/apacheds/dist/2.0.0.AM26/apacheds-2.0.0.AM26.tar.gz
-
 #grab prometheus monitoring- version 2.47
 wget -O prometheus-2.47.0.linux-amd64.tar.gz https://github.com/prometheus/prometheus/releases/download/v2.47.0/prometheus-2.47.0.linux-amd64.tar.gz
 
 # untars the archives 
 tar -axvf munge-0.5.15.tar.xz
 tar -axvf slurm-23.02-latest.tar.bz2
-tar -axvf apacheds-2.0.0.AM26.tar.gz
 tar -axvf prometheus-2.47.0.linux-amd64.tar.gz
 
 
@@ -59,10 +55,6 @@ make -j4 && make install
 make clean
 popd 
 
-
-## apacheds install 
-#note that this is a java thing so not a lot to do here 
-mv apacheds-2.0.0.AM26 ${MAIN_INSTALL_PREFIX}/apacheds
 
 ## prometheus install 
 mv prometheus-2.47.0.linux-amd64 ${MAIN_INSTALL_PREFIX}/prometheus
