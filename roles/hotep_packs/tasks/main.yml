@@ -45,5 +45,6 @@
       - chrony
       - firewalld
       - openldap-clients
+      - openldap-servers
       - perl-interpreter
     state: latest
