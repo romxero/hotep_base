@@ -43,4 +43,5 @@
       - infiniband-diags-devel 
       - mariadb-devel
       - chrony
+      - firewalld
     state: latest
