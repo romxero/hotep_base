@@ -70,7 +70,7 @@ mv prometheus-2.47.0.linux-amd64 ${MAIN_INSTALL_PREFIX}/prometheus
 #Create the profile for the environment 
 cat << EOF > /etc/profile.d/z99_hotep.sh
 
-PATH=${MAIN_INSTALL_PREFIX}/munge/bin:${MAIN_INSTALL_PREFIX}/slurm/bin:\${PATH}
+PATH=${MAIN_INSTALL_PREFIX}/munge/bin:${MAIN_INSTALL_PREFIX}/munge/sbin:${MAIN_INSTALL_PREFIX}/slurm/bin:${MAIN_INSTALL_PREFIX}/slurm/sbin:\${PATH}
 LD_LIBRARY_PATH=${MAIN_INSTALL_PREFIX}/munge/lib:${MAIN_INSTALL_PREFIX}/slurm/lib:${MAIN_INSTALL_PREFIX}/munge/lib64:${MAIN_INSTALL_PREFIX}/slurm/lib64:\${LD_LIBRARY_PATH}
 CPATH=${MAIN_INSTALL_PREFIX}/munge/include:${MAIN_INSTALL_PREFIX}/slurm/include:\${CPATH}
 
