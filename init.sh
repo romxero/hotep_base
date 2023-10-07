@@ -16,8 +16,30 @@ mkdir -p ${MAIN_INSTALL_TMP_DIR}
 chmod -R 655 ${MAIN_INSTALL_DIR}
 chmod -R 655 ${MAIN_INSTALL_TMP_DIR}
 
+#check to see if we have apt or dnf avaialble for us
+PKG_MAN_TRAP=1
+
+grep -iP "Debian|Ubuntu" /etc/os-release > /dev/null
+if [ $? -eq 0 ]
+then 
+PKG_MAN_TRAP=0
+apt-get install -ymq ansible ansible-core
+fi
+
+grep -iP "fedora|redhat|oracle*|alma*" /etc/os-release > /dev/null
 #lets make sure we get the ansible packages
+if [ $? -eq 0 ]
+then
+PKG_MAN_TRAP=0
 dnf install -y ansible-core ansible ansible-collection-ansible-utils ansible-collection-ansible-posix ansible-collection-community-general
+fi
+
+if [ ${PKG_MAN_TRAP} -eq 1 ]
+then
+echo "we don't have Deb/Ubuntu or RHEL distros here"
+echo "exiting"
+exit 1
+fi
 
 #use this to install packages via ansible
 ansible-playbook --connection=local --inventory 127.0.0.1 ./site.yml
