@@ -6,6 +6,7 @@
       - make
       - cmake
       - automake
+      - glibc-devel
       - autoconf
       - java-1.8.0-openjdk-devel
       - java-1.8.0-openjdk
@@ -106,5 +107,13 @@
       - ldap-utils
       - slapd
       - perl
+      - libc6-dev
+      - liblz4-tool
+      - liblz4-dev
+      - freeipmi
+      - librdkafka1
+      - librdkafka-dev
+      - hwloc
+      - libhwloc-common
     state: latest
   when: ansible_os_family == "Debian"

@@ -56,14 +56,25 @@ wget -O munge-0.5.15.tar.xz https://github.com/dun/munge/releases/download/munge
 #grab prometheus monitoring- version 2.47
 wget -O prometheus-2.47.0.linux-amd64.tar.gz https://github.com/prometheus/prometheus/releases/download/v2.47.0/prometheus-2.47.0.linux-amd64.tar.gz
 
-# untars the archives 
-tar -axvf munge-0.5.15.tar.xz
-tar -axvf slurm-23.02-latest.tar.bz2
-tar -axvf prometheus-2.47.0.linux-amd64.tar.gz
+
+
+#get the parent directories of the archives
+MUNGE_PARENT_DIR=$(tar atf munge-0.5.15.tar.xz | head -n1)
+SLURM_PARENT_DIR=$(tar atf slurm-23.02-latest.tar.bz2 | head -n1)
+PROMETHEUS_PARENT_DIR=$(tar atf prometheus-2.47.0.linux-amd64.tar.gz | head -n1)
+
+
+
+# untars the archives
+tar -axvf munge-0.5.15.tar.xz #-C _munge_current
+tar -axvf slurm-23.02-latest.tar.bz2 #-C _slurm_current
+tar -axvf prometheus-2.47.0.linux-amd64.tar.gz #-C  _prometheus_current
+
+
 
 
 #start the building munge 
-pushd munge-0.5.15
+pushd ${MUNGE_PARENT_DIR}
 bash ./configure --prefix=${MAIN_INSTALL_PREFIX}/munge --sysconfdir=/etc --localstatedir=/var --runstatedir=/run
 make -j4 && make install
 make clean
@@ -71,15 +82,22 @@ popd
 
 
 #install slurm
-pushd slurm-23.02.5/
-bash ./configure --prefix=${MAIN_INSTALL_PREFIX}/slurm --sysconfdir=/etc --localstatedir=/var --runstatedir=/run
+pushd ${SLURM_PARENT_DIR}
+#bash ./configure --prefix=${MAIN_INSTALL_PREFIX}/slurm --sysconfdir=/etc --localstatedir=/var --runstatedir=/run
+PMIX_PATH=$(pmix_info --path prefix | cut -d ':' -f 2 | sed 's/ //g')
+
+bash ./configure --prefix=${MAIN_INSTALL_PREFIX}/slurm --sysconfdir=/etc \
+--localstatedir=/var --runstatedir=/run --enable-dependency-tracking \
+--enable-pam --enable-multiple-slurmd --enable-deprecated --with-pmix=${PMIX_PATH}
+
+
 make -j4 && make install
 make clean
 popd 
 
 
 ## prometheus install 
-mv prometheus-2.47.0.linux-amd64 ${MAIN_INSTALL_PREFIX}/prometheus
+mv ${PROMETHEUS_PARENT_DIR} ${MAIN_INSTALL_PREFIX}/prometheus
 
 ## Make the munge key
 sudo -u munge ${MAIN_INSTALL_PREFIX}/munge/sbin/mungekey --verbose
