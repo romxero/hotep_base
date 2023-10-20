@@ -1,0 +1,44 @@
+#hotep chronyd/ntp configuration
+
+{% if hotep_management_node  %}
+#if its a management node for datahotep
+server time.facebook.com iburst
+server time.windows.com iburst
+pool 2.fedora.pool.ntp.org iburst
+pool 0.us.pool.ntp.org iburst
+server time.apple.com iburst
+server ntp1.ona.org iburst
+server ntp1.net.berkeley.edu iburst
+pool 0.freebsd.pool.ntp.org iburst
+pool 1.openbsd.pool.ntp.org iburst
+pool time.nist.gov iburst
+server utcnist2.colorado.edu iburst
+{% end if %}
+
+
+{% if hotep_compute_node  %}
+#if its a compute node for datahotep 
+
+
+    {% for server in chronyd_hotep_time_servers %}
+
+    server {{ server }} iburst
+
+    {% endfor %}
+
+{% end if %}
+
+
+
+driftfile /var/lib/chrony/drift
+
+makestep 1.0 3
+
+rtcsync
+
+keyfile /etc/chrony.keys
+
+leapsectz right/UTC
+
+logdir /var/log/chrony
+
