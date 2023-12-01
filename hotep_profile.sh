@@ -1,4 +1,10 @@
-#!/bin/sh
+#!/bin/bash
+
+export RC_SESSION_NAME="rdubya_1986"
+export MAIN_WINDOW_NAME="login-01.czbiohub.org"
+export SECONDARY_WINDOW_NAME="login-02.czbiohub.org"
+export RC_DEF_SHELL="bash"
+
 
 
 function generateRoleDirTree()
@@ -85,10 +91,57 @@ function generatePlaybookDirTree()
 }
 
  
+function command_shell_init()
+{
+
+case $1 in
+    "sdiag")
+       ${RC_DEF_SHELL} -c "sdiag | less" 
+    ;;
+    "sleep")
+       ${RC_DEF_SHELL} -c "sleep 3"
+    ;;
+    "exercise")
+        echo "Time for gym"
+    ;;
+    *)
+        echo "Do nothing"
+    ;;
+esac
+
+}
 
 
+function gen_tmux_session_for_servers()
+{
 
-#alias gen_ansible="mkdir"
+SESSION_RETURN_STRING=$(tmux list-sessions | cut -d ':' -f 1)
+
+if [ "${SESSION_RETURN_STRING}" = "${RC_SESSION_NAME}" ]
+then 
+#attach to the session
+tmux attach -t ${RC_SESSION_NAME}
+else
+#lets start the tmux server first 
+tmux start-server
+
+# creat windows for session
+tmux new-session -d -s ${RC_SESSION_NAME} -n main_window -d "${RC_DEF_SHELL} -l -c \"sdiag less\"; /usr/bin/env ${RC_DEF_SHELL} -i"
+tmux new-window "${RC_DEF_SHELL} -l -c ssh login-01"
+
+tmux attach -t ${RC_SESSION_NAME}
+
+fi 
+
+}
+
+
+#export the shell functions
+export -f command_shell_init
+export -f gen_tmux_session_for_servers
+export -f generatePlaybookDirTree
+export -f generateRoleDirTree
+
 
 
 
