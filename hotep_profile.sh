@@ -127,7 +127,7 @@ tmux start-server
 
 # creat windows for session
 tmux new-session -d -s ${RC_SESSION_NAME} -n main_window -d "${RC_DEF_SHELL} -l -c \"sdiag |less\"; /usr/bin/env ${RC_DEF_SHELL} -i"
-tmux new-window "${RC_DEF_SHELL} -l -c \"ssh login-01\""
+tmux new-window "${RC_DEF_SHELL} -l -c \"ssh login-02\""
 
 tmux attach -t ${RC_SESSION_NAME}
 
