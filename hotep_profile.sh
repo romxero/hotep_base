@@ -137,8 +137,20 @@ fi
 
 
 
+function start_ssh_agent()
+{
+    #just some simple crap
+    pkill -5 ssh-agent 
 
-#export the shell functions
+    eval `ssh-agent`
+
+    ssh-add 
+
+
+}
+
+#exporting shell functions
+export -f start_ssh_agent
 export -f command_shell_init
 export -f gen_tmux_session_for_servers
 export -f generatePlaybookDirTree
