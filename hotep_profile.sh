@@ -7,7 +7,7 @@ export RC_DEF_SHELL="bash"
 
 
 
-function generateRoleDirTree()
+function gen_ansible_role_dir_tree()
 {
     local roleName=$1 
     
@@ -48,7 +48,7 @@ function generateRoleDirTree()
 }
 
 
-function generatePlaybookDirTree()
+function gen_ansible_playbook_dir_tree()
 {
     local playbookName=$1 
     
@@ -153,8 +153,8 @@ function start_ssh_agent()
 export -f start_ssh_agent
 export -f command_shell_init
 export -f gen_tmux_session_for_servers
-export -f generatePlaybookDirTree
-export -f generateRoleDirTree
+export -f gen_ansible_playbook_dir_tree
+export -f gen_ansible_role_dir_tree
 
 
 
