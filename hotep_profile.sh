@@ -5,6 +5,7 @@ export MAIN_WINDOW_NAME="login-01.czbiohub.org"
 export SECONDARY_WINDOW_NAME="login-02.czbiohub.org"
 export RC_DEF_SHELL="bash"
 
+export CODE=${HOME}/Documents/code
 
 
 function gen_ansible_role_dir_tree()
