@@ -8,6 +8,31 @@ export RC_DEF_SHELL="bash"
 export CODE=${HOME}/Documents/code
 
 
+function trash_make_changes_to_repo()
+{
+
+# I dont think I'm gonna keep this function right here 
+#blah
+git clone
+git pull 
+#make changes
+git switch -C dev/rc/branchname
+
+git commit -a 
+git push origin
+
+#merge
+git switch main
+git merge -a -m "hello" dev/rc/branchname
+git push 
+git push origin
+
+git branch -d dev/rc/branchname
+git branch -d -r dev/rc/branchname
+
+
+}
+
 
 function pull_all_gitolite_repos()
 {
