@@ -8,6 +8,19 @@ export RC_DEF_SHELL="bash"
 export CODE=${HOME}/Documents/code
 
 
+
+function pull_all_gitolite_repos()
+{
+
+	pkill -5 ssh-agent
+	eval `ssh-agent`
+	ssh-add
+
+    ssh -A -i ~/.ssh/id_ecdsa -t -l randall.white login-02.czbiohub.org ssh -T -A gitolite3@frankie.czbiohub.org info | grep " R W" 2> /dev/null | sed 's/ R W*//g' | xargs -I'{}' git clone gitolite3@frankie.czbiohub.org:'{}'
+
+}
+
+
 function gen_ansible_role_dir_tree()
 {
     local roleName=$1 
@@ -156,6 +169,8 @@ export -f command_shell_init
 export -f gen_tmux_session_for_servers
 export -f gen_ansible_playbook_dir_tree
 export -f gen_ansible_role_dir_tree
+export -f pull_all_gitolite_repos
+
 
 
 
