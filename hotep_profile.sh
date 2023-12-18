@@ -6,6 +6,11 @@ export SECONDARY_WINDOW_NAME="login-02.czbiohub.org"
 export RC_DEF_SHELL="bash"
 
 export CODE=${HOME}/Documents/code
+export DOWNLOADS=${HOME}/Downloads
+
+
+
+
 
 
 function trash_make_changes_to_repo()
