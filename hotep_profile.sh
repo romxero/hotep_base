@@ -7,6 +7,8 @@ export RC_DEF_SHELL="bash"
 
 export CODE=${HOME}/Documents/code
 export DOWNLOADS=${HOME}/Downloads
+export LCK_FILE=${HOME}/.hotep_lck
+
 
 
 
