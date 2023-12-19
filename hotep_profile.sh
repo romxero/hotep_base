@@ -12,6 +12,11 @@ export LCK_FILE=${HOME}/.hotep_lck
 
 
 
+function process_git_repo_pulls() {
+pushd $1
+git pull
+popd
+}
 
 
 
@@ -202,6 +207,7 @@ export -f gen_tmux_session_for_servers
 export -f gen_ansible_playbook_dir_tree
 export -f gen_ansible_role_dir_tree
 export -f pull_all_gitolite_repos
+export -f process_git_repo_pulls
 
 
 
