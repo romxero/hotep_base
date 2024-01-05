@@ -209,6 +209,8 @@ export -f gen_ansible_role_dir_tree
 export -f pull_all_gitolite_repos
 export -f process_git_repo_pulls
 
+#get aliases ready, possibly map them to functions and/or programs
+alias l='ls -lrthsa'
 
 
 
