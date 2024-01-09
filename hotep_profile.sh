@@ -1,13 +1,19 @@
 #!/bin/bash
 
+
+## vars
 export RC_SESSION_NAME="rdubya_1986"
 export MAIN_WINDOW_NAME="login-01.czbiohub.org"
 export SECONDARY_WINDOW_NAME="login-02.czbiohub.org"
 export RC_DEF_SHELL="bash"
 
-export CODE=${HOME}/Documents/code
-export DOWNLOADS=${HOME}/Downloads
-export LCK_FILE=${HOME}/.hotep_lck
+
+## dirs
+export CODE_DIRS=${HOME}/Documents/code #code directory 
+export CODE=${CODE_DIRS} #backwards compatible with my original workflow
+export DOWNLOADS=${HOME}/Downloads #downloads directory
+export MAIN_LCK_FILE=${HOME}/.hotep_lck #general lock file
+export INIT_LCK_FILE=${HOME}/.hotep_init_lck #lock file for initialization
 
 
 
@@ -16,6 +22,27 @@ function process_git_repo_pulls() {
 pushd $1
 git pull
 popd
+}
+
+
+function init_profile()
+{
+if ! [ -f ${INIT_LCK_FILE} ] 
+then 
+	#make the directories
+ 	mkdir -p ${CODE_DIRS}
+	mkdir -p ${DOWNLOADS}
+
+
+#create lock file
+touch  ${INIT_LCK_FILE}
+else
+	echo "Init locked, please remove lock file ${INIT_LCK_FILE}"
+	exit 1
+fi
+
+
+
 }
 
 
