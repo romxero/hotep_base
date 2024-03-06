@@ -1,0 +1,16 @@
+#!/bin/bash
+# Author: RC
+# my environment for rc_apps
+
+RC_PREFIX=${HOME}/rc_apps
+
+
+PATH=${RC_PREFIX}/bin:${PATH}
+LD_LIBRARY_PATH=${RC_PREFIX}/lib:${LD_LIBRARY_PATH}
+LIBRARY_PATH=${RC_PREFIX}/lib:${LIBRARY_PATH}
+C_INCLUDE_PATH=${RC_PREFIX}/include:${C_INCLUDE_PATH}
+C_PATH=${RC_PREFIX}/include:${C_PATH}
+
+export PATH LD_LIBRARY_PATH LIBRARY_PATH C_INCLUDE_PATH C_PATH
+
+
