@@ -1,5 +1,5 @@
 #!/bin/bash
-#!/bin/bash
+
 # Goon managmement node deployment. 
 
 # Main mirrors
