@@ -1,5 +1,125 @@
 #!/bin/bash
+# Goon managmement node deployment. 
 
+### Potato variables 
+MY_DEPLOYMENT_DIRECTORY="/hpc_admin/"
+
+
+
+### Meat variables
+# Main mirrors
+HTTP_MAIN_MIRROR_URL="http://southfront.mm.fcix.net/fedora/linux"
+HTTPS_MAIN_MIRROR_URL="https://southfront.mm.fcix.net/fedora/linux"
+RSYNC_MAIN_MIRROR_URL="rsync://southfront.mm.fcix.net/fedora-enchilada/linux"
+# EPEL mirror
+HTTP_EPEL_MIRROR_URL="http://southfront.mm.fcix.net/epel"
+HTTPS_EPEL_MIRROR_URL="https://southfront.mm.fcix.net/epel"
+RSYNC_EPEL_MIRROR_URL="rsync://southfront.mm.fcix.net/fedora-epel"
+##
+# Rclone AMD64 uri
+RCLONE_AMD64_URI="https://downloads.rclone.org/rclone-current-linux-amd64.zip"
+# Rclone ARM uri
+RCLONE_ARM_URI="https://downloads.rclone.org/rclone-current-linux-arm.zip"
+
+# use ftp mirror to serve files
+
+function die() {
+    echo $1
+    exit 1
+}
+
+
+
+
+function createEnvironment() {
+    local envDir=$1
+    local hackRpmDir=$2
+    local hackRpmUrl=$3
+
+    if [ -d $envDir ]; then
+        echo "Environment already exists in $envDir"
+        return
+    fi
+
+    mkdir -p $envDir
+    downloadHackRpms $hackRpmDir $hackRpmUrl
+    pushd $envDir
+    mkdir -p {repos,cache,logs}
+    popd
+}
+
+
+
+
+
+function checkForApplications()
+{
+
+    local APP_ARR=(rclone rsync wget rpm lscpu)
+
+        for app in "${APP_ARR[@]}"
+        do
+
+        which $app &> /dev/null 
+
+            if [ $? -ne 0 ]; then
+                die "Application $app not found. Please install it before proceeding"
+            fi
+
+        done
+
+
+}
+
+
+
+function downloadHackRpms() {
+    local hackRpmDir=$1
+    local hackRpmUrl=$2
+
+    if [ -d $hackRpmDir ]; then
+        echo "Hack RPMs already downloaded in $hackRpmDir"
+        return
+    fi
+
+    mkdir -p $hackRpmDir
+    pushd $hackRpmDir
+    wget $hackRpmUrl
+    popd
+}
+
+
+
+function mirrorRepoInDir() {
+    local repoDir=$1
+    local repoUrl=$2
+
+    if [ -d $repoDir ]; then
+        echo "Repo $repoName already exists in $repoDir"
+        return
+    fi
+
+
+}
+
+
+# meat and potatoes
+
+function main()
+{
+	#lets instantiate the environment first 
+	createEnvironment ${MY_DEPLOYMENT_DIRECTORY}
+
+}
+
+
+main 
+
+
+exit 0 
+
+
+#end 
 #lets install munge, slurm and all dependencies
 
 MAIN_INSTALL_DIR=/opt/slurm_current
