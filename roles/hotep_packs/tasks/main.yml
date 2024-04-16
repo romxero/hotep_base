@@ -48,6 +48,12 @@
       - openldap-clients
       - openldap-servers
       - perl-interpreter
+      - collectd
+      - collectd-ipmi
+      - collectd-disk
+      - collectd-utils
+      - collectd-rrdtool
+      - collectd-virt
     state: latest
   when: ansible_os_family == "RedHat"
 
