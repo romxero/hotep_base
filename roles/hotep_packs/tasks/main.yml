@@ -19,7 +19,6 @@
       - lbzip2
       - pbzip2
       - libgcrypt-devel
-      - openssl3-devel
       - freeipmi-devel
       - man2html
       - man2html-core
@@ -45,8 +44,6 @@
       - mariadb-devel
       - chrony
       - firewalld
-      - openldap-clients
-      - openldap-servers
       - perl-interpreter
       - collectd
       - collectd-ipmi
