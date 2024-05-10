@@ -18,6 +18,19 @@
       - bzip2-devel
       - lbzip2
       - pbzip2
+      - tmux
+      - screen
+      - vim
+      - nano
+      - htop
+      - btop
+      - emacs
+      - vim
+      - rsync
+      - gcc-gnat
+      - geany
+      - wget 
+      - curl
       - libgcrypt-devel
       - freeipmi-devel
       - man2html
@@ -51,6 +64,8 @@
       - collectd-utils
       - collectd-rrdtool
       - collectd-virt
+      - apptainer
+      - podman
     state: latest
   when: ansible_os_family == "RedHat"
 
