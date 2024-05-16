@@ -46,6 +46,8 @@
       - libyaml-devel
       - libjwt-devel
       - pam-devel
+      - 389-ds-base
+      - 389-ds-base-libs
       - hdf5-devel
       - hwloc-devel
       - libbpf-devel
