@@ -5,6 +5,7 @@
       - gcc
       - make
       - cmake
+      - ethtool
       - automake
       - glibc-devel
       - autoconf
